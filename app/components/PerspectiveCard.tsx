@@ -27,8 +27,6 @@ export function PerspectiveCard({ children, maxAngleX = 0, maxAngleY = 0, invert
         const mouseX = (event.clientX + window.scrollX) - (cardBounds.x + cardBounds.width / 2)
         const mouseY = (event.clientY + window.scrollY) - (cardBounds.y + cardBounds.height / 2)
 
-        console.log(cardBounds.width, cardBounds.height)
-
         const mousePX = mouseX / cardBounds.width
         const mousePY = mouseY / cardBounds.height
 
