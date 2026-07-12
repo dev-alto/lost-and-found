@@ -8,11 +8,12 @@ interface PerspectiveCardProps {
     maxAngleY?: number
     invertX?: boolean
     invertY?: boolean
+    perspective?: number
 }
 
-export function PerspectiveCard({ children, maxAngleX = 0, maxAngleY = 0, invertX = false, invertY = false }: PerspectiveCardProps) {
+export function PerspectiveCard({ children, maxAngleX = 0, maxAngleY = 0, invertX = false, invertY = false, perspective = 1200 }: PerspectiveCardProps) {
 
-    const [perspective, setPerspective] = useState('')
+    const [rotation, setRotation] = useState('')
     const [hovering, setHovering] = useState(false)
 
     const cardRef = useRef<HTMLDivElement>(null)
@@ -26,29 +27,32 @@ export function PerspectiveCard({ children, maxAngleX = 0, maxAngleY = 0, invert
         const mouseX = (event.clientX + window.scrollX) - (cardBounds.x + cardBounds.width / 2)
         const mouseY = (event.clientY + window.scrollY) - (cardBounds.y + cardBounds.height / 2)
 
+        console.log(cardBounds.width, cardBounds.height)
+
         const mousePX = mouseX / cardBounds.width
         const mousePY = mouseY / cardBounds.height
 
         let rX = mousePX * maxAngleX
         if (invertX)
             rX *= -1
+
         let rY = mousePY * maxAngleY
         if (invertY)
             rY *= -1
 
-        const perspective = `rotateY(${rX}deg) rotateX(${-rY}deg`
+        const rotation = `rotateY(${rX}deg) rotateX(${-rY}deg`
 
         setHovering(true)
-        setPerspective(perspective)
-        console.log(perspective)
+        setRotation(rotation)
+        // console.log(rotation)
+    }
+
+    function updateCardBounds() {
+        cardBoundsRef.current = cardRef.current!.getBoundingClientRect()
     }
 
     useEffect(() => {
         if (!cardRef.current) return
-
-        const updateCardBounds = () => {
-            cardBoundsRef.current = cardRef.current!.getBoundingClientRect()
-        }
 
         updateCardBounds()
         window.addEventListener('resize', updateCardBounds)
@@ -58,10 +62,11 @@ export function PerspectiveCard({ children, maxAngleX = 0, maxAngleY = 0, invert
         }
     }, [cardRef])
     
-    return <section className='perspective-distant'>
+    return <section style={{ perspective: perspective }}>
         <div
-            className={'transition-all hover:ease-out ease-linear duration-700'}
-            style={{ transform: hovering ? perspective : '' }}
+            className="transition-all hover:ease-out ease-linear duration-700"
+            style={{ transform: hovering ? rotation : '' }}
+            onMouseEnter={updateCardBounds}
             onMouseMove={updatePerspective}
             onMouseLeave={() => { setHovering(false) }}
             ref={cardRef}
