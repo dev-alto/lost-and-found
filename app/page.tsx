@@ -9,7 +9,7 @@ export default function Home() {
         <PerspectiveCard maxAngleX={20} maxAngleY={40} perspective={1000}>
           <div className="starting:opacity-0 opacity-100 delay-500 transition-opacity duration-2000">
             <h1 className="group text-5xl sm:text-7xl lg:text-9xl text-center font-bold bg-linear-to-t from-neutral-900 to-white bg-clip-text text-transparent transition-all cursor-help">
-              <span className="text-sky-500 sm:text-transparent starting:text-transparent group-hover:text-sky-500 transition-colors delay-3000 sm:delay-0 group-hover:delay-0 duration-1000">lost</span>
+              <span className="text-red-500 sm:text-transparent starting:text-transparent group-hover:text-red-500 transition-colors delay-3000 sm:delay-0 group-hover:delay-0 duration-1000">lost</span>
               {' and '}
               <span className='text-lime-500 sm:text-transparent starting:text-transparent group-hover:text-lime-500 transition-colors delay-3500 sm:delay-0 group-hover:delay-500 duration-1000'>found</span>
             </h1>
