@@ -1,5 +1,7 @@
 'use client'
 
+// NOTE: will desync on scroll whilst keeping mouse hover 
+
 import { MouseEvent, ReactNode, useEffect, useRef, useState } from 'react'
 
 interface PerspectiveCardProps {
@@ -24,8 +26,8 @@ export function PerspectiveCard({ children, maxAngleX = 0, maxAngleY = 0, invert
 
         const cardBounds = cardBoundsRef.current
 
-        const mouseX = (event.clientX + window.scrollX) - (cardBounds.x + cardBounds.width / 2)
-        const mouseY = (event.clientY + window.scrollY) - (cardBounds.y + cardBounds.height / 2)
+        const mouseX = event.clientX - (cardBounds.x + cardBounds.width / 2)
+        const mouseY = event.clientY - (cardBounds.y + cardBounds.height / 2)
 
         const mousePX = mouseX / cardBounds.width
         const mousePY = mouseY / cardBounds.height
